@@ -92,12 +92,16 @@ class CreateTrackList:
         self.track_txt.delete(0, tk.END)
 
     def save_clicked(self):
-        with open(self.file_path, "w") as file:
-            json.dump(self.id_lib, file, indent=4)
-            self.status_lbl.configure(text="Playlist saved", fg="green")
+        if self.id_lib:
+            with open(self.file_path, "w") as file:
+                json.dump(self.id_lib, file, indent=4)
+                self.status_lbl.configure(text="Playlist saved", fg="green")
+        else:
+            self.status_lbl.configure(text="Please add a track fist!", fg="red")
 
 
     def load_clicked(self):
+        self.id_lib.clear()
         with open(self.file_path, 'r') as file:
             data = json.load(file)
             load_track = []

@@ -1,7 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 import tkinter.scrolledtext as tkst
+from tokenize import group
+
 import track_library as lib
+from track_library import get_artist
 
 
 def set_text(text_area, content):
@@ -49,16 +52,30 @@ class TrackViewer():
         self.search_btn.pack(side="left")
 
         groups_sorting = ["", "rating ↑", "rating ↓", "a-z", "z-a"]
+
         sort_frame = ttk.Frame(window)
         sort_frame.grid(row=2, column=2, columnspan=2, sticky="we", padx=(50,0), pady=10)
 
-        self.combo_sort = ttk.Combobox(sort_frame)
+        self.combo_sort = ttk.Combobox(sort_frame, width=10)
         self.combo_sort["values"] = groups_sorting
         self.combo_sort.current(0)
         self.combo_sort.pack(side="left")
 
-        self.check_combobox = tk.Button(sort_frame, text="Sort", command=self.combobox_clicked, bg="#008080", fg="white")
-        self.check_combobox.pack(side="left")
+        self.check_combobox = tk.Button(sort_frame, text="Sort", command=self.sort_combobox_clicked, bg="#008080", fg="white")
+        self.check_combobox.pack(side="left", padx=(0,30))
+
+        groups_filter = [""]
+        for key in lib.library:
+            if get_artist(key) not in groups_filter:
+                groups_filter.append(get_artist(key))
+
+        self.combo_filter = ttk.Combobox(sort_frame)
+        self.combo_filter["values"] = groups_filter
+        self.combo_filter.current(0)
+        self.combo_filter.pack(side="left")
+
+        self.check_combo_filter = tk.Button(sort_frame, text="Filter", command=self.filtered_combobox_clicked, bg="#008080", fg="white")
+        self.check_combo_filter.pack(side="left")
 
 
         self.status_lbl = tk.Label(window, text="", font=("Segoe UI", 10), bg="#f4f4f4")
@@ -86,7 +103,7 @@ class TrackViewer():
     def list_tracks_clicked(self):
         track_list = lib.list_all()
         set_text(self.list_txt, track_list)
-        self.status_lbl.configure(text="List Tracks button was clicked!")
+        self.status_lbl.configure(text="List Tracks button was clicked!", fg="green")
 
     def search_track(self):
         search_input = self.search_txt.get().strip().lower()
@@ -108,17 +125,16 @@ class TrackViewer():
                 self.status_lbl.configure(text="No matching track found", fg="red")
 
 
-
-    def combobox_clicked(self):
+    def sort_combobox_clicked(self):
         group = self.combo_sort.get()
         if group == "":
             self.status_lbl.configure(text="Please select a sorting method first!", fg="red")
         elif group == "rating ↑":
-            self.ascending_sort()
+            self.descending_sort()
             self.status_lbl.configure(text="Option sorting by rating ascending was clicked!", fg="green")
             self.combo_sort.current(0)
         elif group == "rating ↓":
-            self.descending_sort()
+            self.ascending_sort()
             self.status_lbl.configure(text="Option sorting by rating descending was clicked!", fg="green")
             self.combo_sort.current(0)
         elif group == "a-z":
@@ -131,17 +147,33 @@ class TrackViewer():
             self.combo_sort.current(0)
 
     def ascending_sort(self):
-        sorted_tracks = sorted(lib.library.values(), key=lambda x: x.rating, reverse=True)
+        sorted_tracks = sorted(lib.library.values(), key=lambda x: x.rating)
         self.display_sorted(sorted_tracks)
     def descending_sort(self):
-        sorted_tracks = sorted(lib.library.values(), key=lambda x: x.rating, reverse=False)
+        sorted_tracks = sorted(lib.library.values(), key=lambda x: x.rating, reverse=True)
         self.display_sorted(sorted_tracks)
     def alphabet_sort(self):
-        sorted_tracks = sorted(lib.library.values(), key=lambda x: x.name.lower(), reverse=False)
+        sorted_tracks = sorted(lib.library.values(), key=lambda x: x.name.lower())
         self.display_sorted(sorted_tracks)
     def alphabet_reserve(self):
         sorted_tracks = sorted(lib.library.values(), key=lambda x: x.name.lower(), reverse=True)
         self.display_sorted(sorted_tracks)
+
+    def filtered_combobox_clicked(self):
+        group = self.combo_filter.get()
+        if group == "":
+            self.status_lbl.configure(text="Please select a filter first!", fg="red")
+        else:
+            self.artist_filter(group)
+            self.status_lbl.configure(text=f"Option filter by {group} was clicked!", fg="green")
+            self.combo_sort.current(0)
+
+    def artist_filter(self, filter_get_txt):
+        filtered_list = [track for track in lib.library.values() if filter_get_txt == track.artist]
+        self.display_sorted(filtered_list)
+        self.status_lbl.configure(text=f"Found {len(filtered_list)} track(s) by {filter_get_txt}", fg="green")
+
+
 
     def display_sorted(self, sorted_tracks):
         lines = []

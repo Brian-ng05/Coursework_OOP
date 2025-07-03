@@ -11,6 +11,7 @@ library["07"] = LibraryItem("Die With A Smile", "Lady Gaga/Bruno Mars", 5)
 library["08"] = LibraryItem("Tro Ve", "Wxrdie",4)
 library["09"] = LibraryItem("Ex's Hate Me","B Ray", 4)
 library["10"] = LibraryItem("Phep Mau", "MayDays", 4)
+library["11"] = LibraryItem("Ex's Hate Me 2","B Ray", 4)
 
 
 

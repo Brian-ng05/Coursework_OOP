@@ -1,21 +1,19 @@
 import tkinter as tk
-
-import font_manager as fonts
 from view_tracks import TrackViewer
 from update_tracks import UpdateRating
 from create_track_list import CreateTrackList
 
 
 def view_tracks_clicked():
-    status_lbl.configure(text="View Tracks button was clicked!")
+    status_lbl.configure(text="View Tracks button was clicked!", fg="green")
     TrackViewer(tk.Toplevel(window))
 
 def update_rating_clicked():
-    status_lbl.configure(text="Update Rating button was clicked!")
+    status_lbl.configure(text="Update Rating button was clicked!", fg="green")
     UpdateRating(tk.Toplevel(window))
 
 def create_track_clicked():
-    status_lbl.configure(text="Create track button was clicked!")
+    status_lbl.configure(text="Create track button was clicked!", fg="green")
     CreateTrackList(tk.Toplevel(window))
 
 window = tk.Tk()
