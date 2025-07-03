@@ -1,12 +1,17 @@
 from library_item import LibraryItem
 
-
 library = {}
 library["01"] = LibraryItem("Another Brick in the Wall", "Pink Floyd", 4)
 library["02"] = LibraryItem("Stayin' Alive", "Bee Gees", 5)
 library["03"] = LibraryItem("Highway to Hell ", "AC/DC", 2)
-library["04"] = LibraryItem("Shape of You", "Ed Sheeran", 1)
+library["04"] = LibraryItem("Shape of You", "Ed Sheeran", 4)
 library["05"] = LibraryItem("Someone Like You", "Adele", 3)
+library["06"] = LibraryItem("Vung Ky Uc", "Chilies", 3)
+library["07"] = LibraryItem("Die With A Smile", "Lady Gaga/Bruno Mars", 5)
+library["08"] = LibraryItem("Tro Ve", "Wxrdie",4)
+library["09"] = LibraryItem("Ex's Hate Me","B Ray", 4)
+library["10"] = LibraryItem("Phep Mau", "MayDays", 4)
+
 
 
 def list_all():
