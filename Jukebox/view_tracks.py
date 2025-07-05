@@ -108,7 +108,7 @@ class TrackViewer():
             self.status_lbl.configure(text="Input is empty!", fg="red")     #Update status
         else:
             filtered_tracks = [track for track in lib.library.values()
-                               if search_input in track.name.lower() or search_input in track.artist.lower()]       # Filter tracks that match input (in name or artist)
+                               if search_input in track.name.lower() or search_input in track.artist.lower()]       #Filter tracks that match input (in name or artist)
 
             if filtered_tracks:     # Found matches
                 lines = [f"{track.name} by {track.artist} (Rating: {track.rating})" for track in filtered_tracks]
@@ -125,11 +125,11 @@ class TrackViewer():
         if group == "":
             self.status_lbl.configure(text="Please select a sorting method first!", fg="red")
         elif group == "rating ↑":
-            self.descending_sort()      #Sort by rating (highest to lowest)
+            self.ascending_sort()      #Sort by rating (highest to lowest)
             self.status_lbl.configure(text="Option sorting by rating ascending was clicked!", fg="green")
             self.combo_sort.current(0)  #Reset combobox selection
         elif group == "rating ↓":
-            self.ascending_sort()       #Sort by rating (lowest to highest)
+            self.descending_sort()       #Sort by rating (lowest to highest)
             self.status_lbl.configure(text="Option sorting by rating descending was clicked!", fg="green")
             self.combo_sort.current(0)
         elif group == "a-z":

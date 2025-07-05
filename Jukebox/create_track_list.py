@@ -45,7 +45,7 @@ class CreateTrackList:
 
         self.track_txt = tk.Entry(add_track_frame, width=12, font=("Segoe UI", 10))     #Create Entry to get user input
         self.track_txt.pack(side="left", padx=(0,20))
-        self.track_txt.focus()      #Auto focus when window opens
+        self.track_txt.focus()      #Automatically focus when window opens
 
         self.add_track_btn = tk.Button(add_track_frame, text="Add Track", command=self.add_track_clicked, font=("Segoe UI", 10), bg="#008080", fg="white")       #Create and locate a button to add track to playlist (binds to add_track_clicked)
         self.add_track_btn.pack(side="left")
@@ -119,8 +119,8 @@ class CreateTrackList:
 
     def reset_clicked(self):    #Function to clear all data in list_txt
         self.list_txt.delete(1.0, tk.END)       #Delete data
+        self.id_lib.clear()  # Delete track IDs in id_lib
         self.status_lbl.configure(text="Reset successfully!", fg="green")   #Inform status
-        self.id_lib.clear()     #Delete track IDs in id_lib
 
 
 if __name__ == "__main__":      # only runs when this file is run as a standalone
